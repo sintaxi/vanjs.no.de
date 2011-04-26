@@ -14,7 +14,7 @@ app.get("/", function(req, rsp){
   rsp.render('index', { layout: false })
 })
 
-app.listen(8001)
+app.listen(process.env.PORT || 8001)
   
 var socket = socketio.listen(app)
 
@@ -45,4 +45,3 @@ socket.on("connection", function(client){
     
 })
 
-// meaningless
