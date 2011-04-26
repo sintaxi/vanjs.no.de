@@ -1,4 +1,4 @@
-var q= function(s){ return document.getElementById(s) }
+var q = function(s){ return document.getElementById(s) }
 
 function send(){
   var input = q('text');
@@ -7,7 +7,7 @@ function send(){
 }
 
 var socket = new io.Socket(null, {
-  port: 8001,
+  port: 80,
   rememberTransport: false
 });
 
