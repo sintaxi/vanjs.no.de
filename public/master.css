@@ -1,0 +1,16 @@
+#chat p { 
+  padding: 8px; 
+  margin: 0; 
+}
+#chat p:nth-child(odd) { 
+  background: #F6F6F6; 
+}
+form { 
+  background: #444; 
+  padding: 5px 10px; 
+}
+form input[type=text] { 
+  width: 98%; 
+  padding: 5px; 
+  background: #fff; 
+}

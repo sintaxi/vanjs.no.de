@@ -1,0 +1,13 @@
+!!! 5
+html(lang="en")
+  head
+    title VanJS
+    meta(charset="utf-8")
+    link(rel="stylesheet", href="/master.css")
+    script(src="http://cdn.socket.io/stable/socket.io.js")
+    script(src="/application.js")
+  body
+    h1 VanJS Chat Client
+    div#chat
+    form#form(onsubmit="send();return false")
+      input#text(type="text", autocomplete="off")
