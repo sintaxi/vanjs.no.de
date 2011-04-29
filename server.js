@@ -36,12 +36,11 @@ socket.on("connection", function(client){
   client.on("disconnect", function(){
     client.broadcast(client.sessionId + " disconnected")
   })
-
-  sub.on("message", function(pattern, key){
-    store.hgetall(key, function(e, obj){
-      client.send(obj.uid + ": " + obj.text)
-    })
-  })
     
 })
 
+sub.on("message", function(pattern, key){
+  store.hgetall(key, function(e, obj){
+    socket.broadcast(obj.uid + ": " + obj.text)
+  })
+})

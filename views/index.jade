@@ -4,6 +4,8 @@ html(lang="en")
     title VanJS
     meta(charset="utf-8")
     link(rel="stylesheet", href="/master.css")
+    script
+      window.port = #{process.env.PORT || 8001};
     script(src="http://cdn.socket.io/stable/socket.io.js")
     script(src="/application.js")
   body

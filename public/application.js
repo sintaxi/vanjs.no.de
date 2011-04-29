@@ -7,7 +7,7 @@ function send(){
 }
 
 var socket = new io.Socket(null, {
-  port: 80,
+  port: window.port,
   rememberTransport: false
 });
 
