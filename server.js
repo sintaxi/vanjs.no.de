@@ -20,14 +20,37 @@ var socket = socketio.listen(app)
 
 sub.subscribe("chat")
 
+var getMessages = function(msgs, cb){
+  var messages = []
+  var counter = msgs.length
+  var order = 0
+  msgs.forEach(function(key){
+    var i = order
+    order ++
+    store.hgetall(key, function(e, obj){
+      counter --
+      messages[i] = [obj.uid + ": " + obj.text]
+      if(counter == 0) cb(messages) 
+    })
+  }) 
+}
+
 socket.on("connection", function(client){
-  client.send("welcome!")
+  client.send(JSON.stringify(["welcome!"]))
+  
+  store.lrange("messages", -20, -1, function(e, results){
+    getMessages(results, function(messages){
+      client.send(JSON.stringify(messages))
+      store.ltrim("messages" -100, -1, function(e,r){})
+    })
+  })
 
   client.on("message", function(text){
     store.incr("messageNextId", function(e, id){
       store.hmset("messages:" + id, { uid: client.sessionId, text: text },
         function(e, r){
           pub.publish("chat", "messages:" + id)
+          store.rpush("messages", "messages:" + id) 
         }
       )
     })
@@ -40,7 +63,8 @@ socket.on("connection", function(client){
 })
 
 sub.on("message", function(pattern, key){
-  store.hgetall(key, function(e, obj){
-    socket.broadcast(obj.uid + ": " + obj.text)
+  getMessages([key], function(obj){
+    var obj = JSON.stringify(obj)
+    socket.broadcast(obj)
   })
 })
